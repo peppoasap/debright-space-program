@@ -1,3 +1,5 @@
+import TimeManager from '../manager/TimeManager';
+
 class Gameplay extends Phaser.Scene{
     constructor() {
         super("Gameplay");
@@ -8,7 +10,7 @@ class Gameplay extends Phaser.Scene{
     }
 
     create(){
-
+        
     }
 
     update(){
