@@ -2,7 +2,7 @@ class ResourcesManager {
 
     constructor() {
         this.money = 0;
-        this.reputation = 0;
+        this.reputation = 20; // from 0 to 100
     }
 
     update_money(n) {
