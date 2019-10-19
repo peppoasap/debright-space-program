@@ -11,9 +11,7 @@ class Launcher extends Phaser.Game {
     super({
       type: Phaser.AUTO,
       scale:{
-        mode: Phaser.Scale.FIT,
         parent: 'game-container',
-        autoCenter: Phaser.Scale.CENTER_BOTH,
         width: 1280,
         height: 640,
       },
@@ -21,8 +19,8 @@ class Launcher extends Phaser.Game {
     })
 
 
-    this.scene.add("MainMenu", new MainMenu(), false);
-    this.scene.add("Gameplay", new Gameplay(), true);
+    this.scene.add("MainMenu", new MainMenu(), true);
+    this.scene.add("Gameplay", new Gameplay(), false);
   }
 
 }

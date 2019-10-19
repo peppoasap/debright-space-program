@@ -8,7 +8,7 @@ class MainMenu extends Phaser.Scene {
 
        this.load.image("background_menu", './src/assets/menu/menu_background.png');
        this.load.image("earth", './src/assets/menu/menu_earth.png');
-       this.load.image("baby_blue", './src/assets/menu/logo.png');
+       this.load.image("debright_logo", './src/assets/menu/debright_logo.png');
        this.load.spritesheet("sparkle", './src/assets/menu/sparkle.png', {frameWidth: 32, frameHeigth: 32});
        this.load.image("sa_logo", './src/assets/menu/ig-space-apps.png');
        this.load.image("start_button", './src/assets/menu/start.png')
@@ -272,8 +272,6 @@ class MainMenu extends Phaser.Scene {
             repeat: -1
         });
 
-        this.add.sprite(1280, 120).setOrigin(0.5,0).setAlpha(0.15).play('rotate');
-
         //Start particle effect for Stars
         var randomPoint = {
             getRandomPoint: function (vec)
@@ -287,7 +285,7 @@ class MainMenu extends Phaser.Scene {
         var particles = this.add.particles('sparkle');
         var emitter = particles.createEmitter({
             frame: [4,5],
-            alpha: {start: 0.2, end: 0},
+            alpha: {start: 0.6, end: 0.2},
             x: 0,
             y: 0,
             speed: 10,
@@ -297,7 +295,9 @@ class MainMenu extends Phaser.Scene {
             emitZone: { type: 'random', source: randomPoint }
         });
 
-        this.add.image(640, 180, "baby_blue");
+        this.add.sprite(1280, 120).setOrigin(0.5,0).setAlpha(0.85).play('rotate');
+        
+        this.add.image(640, 180, "debright_logo");
         var play = this.add.image(640, 300, "start_button").setAlpha(0.5).setInteractive();
         var settings = this.add.image(640, 360, "settings_button").setAlpha(0.5).setInteractive();
         var credits = this.add.image(640, 420, "credits_button").setAlpha(0.5).setInteractive();
