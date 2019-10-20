@@ -8,15 +8,17 @@ navigator.geolocation.getCurrentPosition(handler);
         function handler(position){
             MY_POSITION = position;
         }
-var VIEW = 4;
+var VIEW = 3;
+
 class Gameplay extends Phaser.Scene{
     constructor() {
         super("Gameplay");
-        this.time_manager = new TimeManager(0.15);
+        this.time_manager = new TimeManager(10);
         this.debris_manager;
         this.orbits_bands = new OrbitsBands();
         this.debris_array = [];
         this.orbits_array = [];
+        this.colors = [0xff0000, 0xffffff, 0x00ff00];
         this.dateText;
         this.resources_manager = new ResourcesManager();
         this.resources_manager.update_money(100000);
@@ -41,6 +43,7 @@ class Gameplay extends Phaser.Scene{
         
         // This is the world-map
         this.background = this.add.image(0,0, "background").setOrigin(0,0);
+        
         // This is the transparent clouds map applied upon the world-map
         this.background_layer_air = this.add.image(0, 320, "background-air-layer");
         // This is the darkness (muahahaha...)
@@ -53,6 +56,9 @@ class Gameplay extends Phaser.Scene{
         this.dateText = this.add.text(1054, 16, "date").setFontFamily("Courier").setFontSize(16).setColor('#ffffff');
         this.add.text(116, 32, this.resources_manager.money + " $").setFontFamily("Courier").setFontSize(18).setColor('#ffffff');
         //Functional Layer
+        //1 sec in life == 1 min in game
+        this.time.addEvent({loop: true, delay: 20, callback: () => {this.time_manager.update(); this.debrisUpdate()}});
+
         this.debris_manager = new DebrisManager(MY_POSITION, this.time_manager, this.cache.json.get("debris_json"), this.orbits_bands);
         this.orbits_bands.setBands(1);
         for(var i = 0; i < VIEW; i++){
@@ -60,13 +66,10 @@ class Gameplay extends Phaser.Scene{
         }
     }
 
-    update(time, delta){
-        this.time_manager.update();
-        this.dateText.setText(this.time_manager.time.format("DD/MM/YYYY - HH:mm.ss"));
-
+    debrisUpdate(){
         this.debris_manager.updateDebrises();
-        if(this.orbits_array.length > 1220*2){
-            for(var i = 0; i < VIEW*2; i++){
+        if(this.orbits_array.length > (640*VIEW)){
+            for(var i = 0; i < VIEW*3; i++){
                 this.orbits_array.pop().destroy();
             }
         }
@@ -82,7 +85,7 @@ class Gameplay extends Phaser.Scene{
                 for(var i = 0; i < VIEW; i++){
                     var longitude = this.debris_manager.leo_debrises[i].longitude_pixel;
                     var latitude = this.debris_manager.leo_debrises[i].latitude_pixel;
-                    this.orbits_array.unshift(this.add.graphics({fillStyle: { color: 0xff0000, alpha: 0.3}}).fillPoint(longitude, latitude, 2));
+                    this.orbits_array.unshift(this.add.graphics({fillStyle: { color: this.colors[i], alpha: 0.7}}).fillPoint(longitude, latitude, 2));
                     this.debris_array[i].setPosition(longitude, latitude);
                 }
                 break;
@@ -97,6 +100,10 @@ class Gameplay extends Phaser.Scene{
                 }
                 break;  
         }
+    }
+
+    update(time, delta){
+        this.dateText.setText(this.time_manager.time.format("DD/MM/YYYY - HH:mm.ss"));
 
         /* [BACKGROUND] */
         // Changing this value will affect the animation velocity

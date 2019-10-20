@@ -1,7 +1,6 @@
 import Phaser from "phaser";
 
 // Importing scenes
-import MainMenu from './scenes/MainMenu.js';
 import Gameplay from './scenes/Gameplay.js';
 
 class Launcher extends Phaser.Game {
@@ -18,8 +17,6 @@ class Launcher extends Phaser.Game {
       title: 'Debright Space Programm'
     })
 
-
-    this.scene.add("MainMenu", new MainMenu(), false);
     this.scene.add("Gameplay", new Gameplay(), true);
   }
 

@@ -12,9 +12,13 @@ class TimeManager{
         this.speed = speed;
     }
 
+    set(speed){
+        this.speed = speed;
+    }
+
     //When you call this function add speed in minutes to actual time.
     update(){
-        this.time.add(this.speed, "minutes");
+        this.time.add(this.speed, "seconds");
         
     }
 
