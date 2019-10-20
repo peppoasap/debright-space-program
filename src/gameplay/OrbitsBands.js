@@ -7,7 +7,7 @@ class OrbitsBands{
 
     setBands(level){
         if(level >= 0 && level < 5){
-            this.state = states[level];
+            this.state = level;
         }
     }
 

@@ -15,6 +15,7 @@ class TimeManager{
     //When you call this function add speed in minutes to actual time.
     update(){
         this.time.add(this.speed, "minutes");
+        
     }
 
 }

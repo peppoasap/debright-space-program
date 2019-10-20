@@ -19,8 +19,8 @@ class Launcher extends Phaser.Game {
     })
 
 
-    this.scene.add("MainMenu", new MainMenu(), true);
-    this.scene.add("Gameplay", new Gameplay(), false);
+    this.scene.add("MainMenu", new MainMenu(), false);
+    this.scene.add("Gameplay", new Gameplay(), true);
   }
 
 }

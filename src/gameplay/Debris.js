@@ -1,5 +1,4 @@
-import TimeManager from "../manager/TimeManager";
-
+var satellite = require('satellite.js');
 class Debris {
 
     /**
@@ -7,12 +6,13 @@ class Debris {
      * @param {object} data 
      */
 
-    constructor(time_manager, my_position, data){
+    constructor(my_position, time_manager, data){
+        this.my_position = my_position;
         this.time_manager = time_manager;
         this.name = data["OBJECT_NAME"];
         this.tle1 = data["TLE_LINE1"];
         this.tle2 = data["TLE_LINE2"];
-        this.velocity;
+        this.velocity = 0;
         this.dimension;
         this.height;
         this.longitude_pixel;
@@ -29,7 +29,7 @@ class Debris {
         // The position_velocity result is a key-value pair of ECI coordinates.
         // These are the base results from which all other coordinates are derived.
         var positionEci = positionAndVelocity.position,
-            velocityEci = positionAndVelocity.velocity,
+            velocityEci = positionAndVelocity.velocity;
             this.velocity = velocityEci;
                 
         // Set the Observer at pc current position in RADIANS
@@ -65,7 +65,7 @@ class Debris {
         // Geodetic coords are accessed via `longitude`, `latitude`, `height`.
         var longitude = positionGd.longitude,
             latitude  = positionGd.latitude,
-            height    = positionGd.height,
+            height    = positionGd.height;
             this.height = height;
             
         //  Convert cordinates RADIANS to DEGREES.
@@ -73,8 +73,8 @@ class Debris {
             latitudeStr  = satellite.degreesLat(latitude);
         
         //Convert DEGREES to PIXEL POSITION for printing on map.
-            this.longitude = this.degToPx(longitudeStr, 0),
-            this.latitude = this.degToPx(latitudeStr, 1);
+            this.longitude_pixel = this.degToPx(longitudeStr, 0),
+            this.latitude_pixel = this.degToPx(latitudeStr, 1);
       }
       /**********************************************************/
 
